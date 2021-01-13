@@ -9,11 +9,27 @@ const UserSchema = new Schema(
         "subHead": "string",
         "content": "string",
         "category": "string",
+        "reviews": [
+            {
+              text: {
+                type: String,
+                required: false,
+                lowercase: true,
+              },
+              user: {
+                type: String,
+                required: false,
+                lowercase: true,
+              },
+            },
+          ],
         "author": {
             "name": "string",
             "img": "string"
         },
         "cover": "string",
+        "createdAt": Date, // server generated
+        "updatedAt": Date // server generated
     }
 )
 
