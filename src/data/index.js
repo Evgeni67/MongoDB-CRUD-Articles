@@ -6,14 +6,9 @@ const uniqid = require("uniqid");
 const ArticleSchema = require("./schema")
 const router = express.Router();
 
-const readFile = (fileName) => {
-  const buffer = fs.readFileSync(path.join(__dirname, fileName));
-  const fileContent = buffer.toString();
-  return JSON.parse(fileContent);
-};
 router.get("/", async (req, res, next) => {
     try {
-      const users = await ArticleSchema.find()
+      const users = await ArticleSchema.find().populate("author")
       res.send(users)
     } catch (error) {
       next(error)
@@ -23,9 +18,6 @@ router.get("/", async (req, res, next) => {
   router.post("/", async (req, res, next) => {
     try {
       const newUser = new ArticleSchema(req.body)
-      newUser.createdAt = new Date()
-      newUser.updatedAt = new Date()
-      newUser._id = uniqid();
       const { _id } = await newUser.save()
   
       res.status(201).send(_id)
@@ -147,5 +139,8 @@ router.post("/:id", async (req, res, next) => {
     next(error)
   }
 })
+
+
+
 
   module.exports = router;

@@ -3,8 +3,8 @@ const cors = require("cors");
 const { join } = require("path");
 const server = express();
 const mongoose = require("mongoose")
-const dataRouter = require("./data") // ? <--
-
+const articlesRouter = require("./data") // ? <--
+const authorsRouter = require("./authors")
 const port = 3333;
 server.use(cors());
 server.use(express.json()); 
@@ -13,7 +13,8 @@ const loggerMiddleware = (req, res, next) => {
   next();
 };
 server.use(loggerMiddleware);
-server.use("/data", dataRouter) // ? <--
+server.use("/articles", articlesRouter) // ? <--
+server.use("/authors", authorsRouter) // ? <--
 
 mongoose
   .connect('mongodb://localhost:27017/articles', {

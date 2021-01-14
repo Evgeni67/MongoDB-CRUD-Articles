@@ -2,9 +2,8 @@ const { Schema } = require("mongoose")
 const mongoose = require("mongoose")
 const mongoosePaginate = require("mongoose-paginate-v2")
 
-const UserSchema = new Schema(
+const ArticleSchema = new Schema(
     {
-        "_id": "string", // server generated
         "headLine": "string",
         "subHead": "string",
         "content": "string",
@@ -23,16 +22,12 @@ const UserSchema = new Schema(
               },
             },
           ],
-        "author": {
-            "name": "string",
-            "img": "string"
-        },
-        "cover": "string",
-        "createdAt": Date, // server generated
-        "updatedAt": Date // server generated
-    }
+        "author": { type: Schema.Types.ObjectId, ref: "Author" },
+        "cover": "string"
+    },
+    { timestamps: true }
 )
 
-UserSchema.plugin(mongoosePaginate)
+ArticleSchema.plugin(mongoosePaginate)
 
-module.exports = mongoose.model("User", UserSchema)
+module.exports = mongoose.model("Articles", ArticleSchema)
